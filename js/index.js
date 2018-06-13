@@ -1,27 +1,27 @@
-let email = document.getElementById("email");
-let sendEmail = document.getElementById("sendEmail");
-let countMember = document.getElementById("countMember");
-let countDown=document.getElementById("countDown");
-let date=new Date(2018,6-1,4,12);
+var email = document.getElementById("email");
+var sendEmail = document.getElementById("sendEmail");
+var countMember = document.getElementById("countMember");
+var countDown=document.getElementById("countDown");
+var date=new Date(2018,6-1,4,12);
 
-let timer=window.setInterval(function(){
-	let dateToday=new Date();
+var timer=window.setInterval(function(){
+	var dateToday=new Date();
 	if(dateToday.getTime()<date.getTime()){
-		let totalSeconds=(date.getTime()-dateToday.getTime())/1000;
-		let countSeconds=Math.floor(totalSeconds%60);
-		let countMinutes=Math.floor((totalSeconds/60)%60);
-		let countHours=Math.floor((totalSeconds/60/60)%24);
-		let countDays=Math.floor(totalSeconds/60/60/24);
+		var totalSeconds=(date.getTime()-dateToday.getTime())/1000;
+		var countSeconds=Math.floor(totalSeconds%60);
+		var countMinutes=Math.floor((totalSeconds/60)%60);
+		var countHours=Math.floor((totalSeconds/60/60)%24);
+		var countDays=Math.floor(totalSeconds/60/60/24);
 		if(date.getTime()==dateToday.getTime()){
 			clearInterval(timer);
 		}
 		countDown.innerHTML="倒數"+countDays+"天"+countHours+"時"+countMinutes+"分"+countSeconds+"秒";
 	}else{
-		let totalSeconds=(dateToday.getTime()-date.getTime())/1000;
-		let countSeconds=Math.floor(totalSeconds%60);
-		let countMinutes=Math.floor((totalSeconds/60)%60);
-		let countHours=Math.floor((totalSeconds/60/60)%24);
-		let countDays=Math.floor(totalSeconds/60/60/24);
+		var totalSeconds=(dateToday.getTime()-date.getTime())/1000;
+		var countSeconds=Math.floor(totalSeconds%60);
+		var countMinutes=Math.floor((totalSeconds/60)%60);
+		var countHours=Math.floor((totalSeconds/60/60)%24);
+		var countDays=Math.floor(totalSeconds/60/60/24);
 		if(date.getTime()==dateToday.getTime()){
 			clearInterval(timer);
 		}
@@ -31,7 +31,7 @@ let timer=window.setInterval(function(){
 
 function getEmail(strEmail){
   return new Promise((resolve, reject) => {
-    let request = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
     request.open('POST', "https://www.thef2e.com/api/isSignUp", true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");  
     request.send("email=" + strEmail);
@@ -42,17 +42,16 @@ function getEmail(strEmail){
 }
 function count(){
   return new Promise((resolve, reject) => {
-    let request = new XMLHttpRequest();
+    var request = new XMLHttpRequest();
     request.open('GET', "https://www.thef2e.com/api/signUpTotal", true); 
     request.send(null);
     request.onload = function() {
       resolve(this.responseText);
-      alert("hi");
     };
   });
 }
 function isEmail(email) {
-  let regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if(!regex.test(email)) {
     return false;
   }else{
@@ -69,8 +68,8 @@ sendEmail.addEventListener('click', function(e){
     sendEmail.value = "Waiting";
     getEmail(email.value).then(function(resv){
        sendEmail.value = "1";
-       let applyJson = JSON.parse(resv);
-       let str = "";
+       var applyJson = JSON.parse(resv);
+       var str = "";
        if(applyJson.success){
           var time = new Date(applyJson.timeStamp);
           var y = time.getFullYear();
@@ -94,8 +93,7 @@ sendEmail.addEventListener('click', function(e){
 });
 
 (async function(){
-  let getTotal = JSON.parse( await count() );
-  alert(getTotal);
+  var getTotal = JSON.parse( await count() );
   if(getTotal.success){
     countMember.innerHTML += getTotal.total + "人";
   }else{
